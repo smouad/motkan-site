@@ -1,9 +1,20 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './styles.css';
 
 export default function Home() {
+  // ROI calculator state
+  const [leads, setLeads] = useState(300);
+  const [commission, setCommission] = useState(9000);
+
+  // Conservative, clearly-labelled estimate logic
+  const recoveredLeads = Math.round(leads * 0.5); // the slow / after-hours leads now answered
+  const extraShowings = Math.round(recoveredLeads * 0.2); // ~20% booked to a showing
+  const extraDealsYr = Math.round(extraShowings * 0.1 * 12); // ~10% close, annualised
+  const recoveredRevenue = extraDealsYr * commission;
+  const fmt = (n) => n.toLocaleString('en-US');
+
   useEffect(() => {
     // Reveal animations
     const revEls = Array.from(document.querySelectorAll('.rev'));
@@ -210,6 +221,15 @@ export default function Home() {
 
   return (
     <>
+      {/* ANNOUNCEMENT BAR */}
+      <div className="announce">
+        <span className="announce-dot"></span>
+        <span>Live — Motkan answers every lead in under 30 seconds, 24/7</span>
+        <a href="#contact" className="announce-link">
+          Book a call <span className="arr">→</span>
+        </a>
+      </div>
+
       {/* TOPBAR */}
       <header className="topbar">
         <div className="topbar-inner">
@@ -239,8 +259,9 @@ export default function Home() {
         <div className="container hero-grid">
           <div>
             <div className="eyerow rev">
-              <span className="rule"></span>
-              <span className="eyebrow">AI systems for real estate</span>
+              <span className="badge-pill">
+                <span className="badge-spark"></span>AI systems for real estate
+              </span>
             </div>
             <h1 className="display hero-headline rev">
               Close more deals. <em>Chase fewer leads.</em>
@@ -280,6 +301,19 @@ export default function Home() {
             </div>
           </div>
           <div className="hero-art-wrap rev">
+            {/* floating lead cards */}
+            <div className="float-card fc-lead">
+              <span className="fc-tag hot">Hot lead</span>
+              <div className="fc-name">Sarah Johnson · Qualified</div>
+              <div className="fc-meta">Luxury Condo · $2.4M · High intent</div>
+            </div>
+            <div className="float-card fc-stat">
+              <div className="fc-stat-v">42%</div>
+              <div className="fc-stat-k">Booked to showing</div>
+            </div>
+            <div className="float-card fc-lang">
+              <span className="fc-globe">🌐</span>90+ languages
+            </div>
             <div className="engine">
               <div className="engine-bar">
                 <span className="d"></span>
@@ -385,6 +419,50 @@ export default function Home() {
             </p>
             <div className="arrowline">
               <span className="rule"></span>From missed inquiries → to booked showings
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BEFORE / AFTER */}
+      <section className="section">
+        <div className="container">
+          <div className="section-head rev">
+            <div className="lead-col">
+              <div className="num">— The shift</div>
+              <h2 className="display">
+                Your pipeline today
+                <br />
+                vs. with Motkan
+              </h2>
+            </div>
+            <p className="right">Same leads. Same market. A completely different machine running behind your team.</p>
+          </div>
+          <div className="ba-grid rev">
+            <div className="ba-col ba-before">
+              <div className="ba-label">Your team today</div>
+              <div className="ba-big">5–20+</div>
+              <div className="ba-sub">people chasing, qualifying &amp; following up by hand</div>
+              <ul className="ba-list">
+                <li>Leads wait hours for a first reply</li>
+                <li>After-hours inquiries go unanswered</li>
+                <li>Agents buried in admin, not closing</li>
+                <li>Thousands of cold leads sitting idle</li>
+              </ul>
+            </div>
+            <div className="ba-divider">
+              <span>vs</span>
+            </div>
+            <div className="ba-col ba-after">
+              <div className="ba-label">With Motkan</div>
+              <div className="ba-big">1</div>
+              <div className="ba-sub">AI system running your entire pipeline, 24/7</div>
+              <ul className="ba-list">
+                <li>Every lead answered in under 30 seconds</li>
+                <li>Works nights, weekends &amp; holidays</li>
+                <li>Agents spend their time only on closing</li>
+                <li>Cold database reactivated automatically</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -759,6 +837,79 @@ export default function Home() {
                 <span>ROI projection</span>
               </div>
               <div className="pbig">01</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ROI CALCULATOR */}
+      <section className="section" id="roi">
+        <div className="container">
+          <div className="roi-head rev">
+            <div className="eyebrow">Estimate your upside</div>
+            <h2 className="display">
+              How much revenue is
+              <br />
+              slipping through the cracks?
+            </h2>
+            <p>Drag the sliders to your numbers. This is a conservative estimate of what a faster, always-on pipeline recovers.</p>
+          </div>
+          <div className="roi-card rev">
+            <div className="roi-inputs">
+              <div className="roi-field">
+                <div className="roi-field-top">
+                  <label htmlFor="leads">Leads you get each month</label>
+                  <span className="roi-field-val">{fmt(leads)}</span>
+                </div>
+                <input
+                  id="leads"
+                  type="range"
+                  min="50"
+                  max="2000"
+                  step="50"
+                  value={leads}
+                  onChange={(e) => setLeads(+e.target.value)}
+                />
+              </div>
+              <div className="roi-field">
+                <div className="roi-field-top">
+                  <label htmlFor="commission">Average commission per deal</label>
+                  <span className="roi-field-val">${fmt(commission)}</span>
+                </div>
+                <input
+                  id="commission"
+                  type="range"
+                  min="3000"
+                  max="30000"
+                  step="1000"
+                  value={commission}
+                  onChange={(e) => setCommission(+e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="roi-outputs">
+              <div className="roi-out">
+                <div className="roi-out-v">{fmt(recoveredLeads)}</div>
+                <div className="roi-out-k">Leads/mo recovered</div>
+              </div>
+              <div className="roi-out">
+                <div className="roi-out-v">{fmt(extraShowings)}</div>
+                <div className="roi-out-k">Extra showings/mo</div>
+              </div>
+              <div className="roi-out">
+                <div className="roi-out-v">{fmt(extraDealsYr)}</div>
+                <div className="roi-out-k">Extra deals/yr</div>
+              </div>
+              <div className="roi-out featured">
+                <div className="roi-out-v accent">${fmt(recoveredRevenue)}</div>
+                <div className="roi-out-k">Est. recovered revenue/yr</div>
+              </div>
+            </div>
+            <div className="roi-foot">
+              <span className="roi-fine">Conservative estimate · your numbers will vary by market</span>
+              <a className="btn primary" href="#contact">
+                Get this for my team <span className="arr">→</span>
+              </a>
             </div>
           </div>
         </div>
