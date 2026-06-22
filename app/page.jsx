@@ -455,50 +455,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* BEFORE / AFTER */}
-      <section className="section">
-        <div className="container">
-          <div className="section-head rev">
-            <div className="lead-col">
-              <div className="num">— The shift</div>
-              <h2 className="display">
-                Your pipeline today
-                <br />
-                vs. with Motkan
-              </h2>
-            </div>
-            <p className="right">Same leads. Same market. A completely different machine running behind your team.</p>
-          </div>
-          <div className="ba-grid rev">
-            <div className="ba-col ba-before">
-              <div className="ba-label">Your team today</div>
-              <div className="ba-big">5–20+</div>
-              <div className="ba-sub">people chasing, qualifying &amp; following up by hand</div>
-              <ul className="ba-list">
-                <li>Leads wait hours for a first reply</li>
-                <li>After-hours inquiries go unanswered</li>
-                <li>Agents buried in admin, not closing</li>
-                <li>Thousands of cold leads sitting idle</li>
-              </ul>
-            </div>
-            <div className="ba-divider">
-              <span>vs</span>
-            </div>
-            <div className="ba-col ba-after">
-              <div className="ba-label">With Motkan</div>
-              <div className="ba-big">1</div>
-              <div className="ba-sub">AI system running your entire pipeline, 24/7</div>
-              <ul className="ba-list">
-                <li>Every lead answered in under 30 seconds</li>
-                <li>Works nights, weekends &amp; holidays</li>
-                <li>Agents spend their time only on closing</li>
-                <li>Cold database reactivated automatically</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* WHAT WE BUILD */}
       <section className="section" id="what">
         <div className="container">
