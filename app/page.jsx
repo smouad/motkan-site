@@ -3,6 +3,35 @@
 import { useEffect, useState } from 'react';
 import './styles.css';
 
+// Progressive (gradient) blur — stacked backdrop-filter layers, each masked to a
+// band, so blur is strongest at the top and fades to zero at the bottom edge.
+function HeaderBlur({ layers = 6, intensity = 2 }) {
+  const seg = 1 / (layers + 1);
+  return (
+    <div className="topbar-blur" aria-hidden="true">
+      {Array.from({ length: layers }).map((_, i) => {
+        const stops = [i * seg, (i + 1) * seg, (i + 2) * seg, (i + 3) * seg]
+          .map((pos, pi) => `rgba(0,0,0,${pi === 1 || pi === 2 ? 1 : 0}) ${pos * 100}%`)
+          .join(', ');
+        // 0deg => 0% is at the bottom, 100% at the top, so higher-blur layers sit up top
+        const gradient = `linear-gradient(0deg, ${stops})`;
+        const blur = `blur(${i * intensity}px)`;
+        return (
+          <div
+            key={i}
+            style={{
+              maskImage: gradient,
+              WebkitMaskImage: gradient,
+              backdropFilter: blur,
+              WebkitBackdropFilter: blur,
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
 export default function Home() {
   // ROI calculator state
   const [leads, setLeads] = useState(300);
@@ -232,6 +261,7 @@ export default function Home() {
 
       {/* TOPBAR */}
       <header className="topbar">
+        <HeaderBlur layers={6} intensity={2} />
         <div className="topbar-inner">
           <a className="logo" href="#top">
             Motkan<span className="dot"></span>

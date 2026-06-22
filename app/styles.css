@@ -43,7 +43,7 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-feature-settings: 'ss01', 'cv11';
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 ::selection {
@@ -249,14 +249,34 @@ em {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: color-mix(in oklab, var(--bg) 52%, transparent);
-  backdrop-filter: blur(32px) saturate(185%);
-  -webkit-backdrop-filter: blur(32px) saturate(185%);
-  border-bottom: 1px solid var(--line);
-  box-shadow: 0 6px 24px -16px rgba(28, 24, 21, 0.5);
+  /* subtle top-down tint for nav legibility; the blur itself is the .topbar-blur layers */
+  background: linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--bg) 74%, transparent),
+    color-mix(in oklab, var(--bg) 8%, transparent)
+  );
+}
+
+/* progressive blur stack — extends a little below the bar so the blur fades out
+   smoothly with no hard cut-off line */
+.topbar-blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: -28px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.topbar-blur > div {
+  position: absolute;
+  inset: 0;
 }
 
 .topbar-inner {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   gap: 32px;
