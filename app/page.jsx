@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import './styles.css';
+import ContactForm from './contact-form';
 
 // Progressive (gradient) blur — stacked backdrop-filter layers, each masked to a
 // band, so blur is strongest at the top and fades to zero at the bottom edge.
@@ -1090,15 +1091,9 @@ export default function Home() {
             Book a free strategy call. We'll map where AI can win you more showings and more deals — and show you the
             ROI before you commit to anything.
           </p>
-          <div className="hero-cta rev">
-            <a className="btn primary lg" href="#contact">
-              Book a strategy call <span className="arr">→</span>
-            </a>
-            <a className="btn ghost lg" href="#pricing">
-              Compare packages
-            </a>
+          <div className="rev" style={{ marginTop: '40px' }}>
+            <ContactForm />
           </div>
-          <p className="finalcta-fine rev">No obligation · No tech setup on your end · See the ROI before you decide</p>
         </div>
       </section>
 
@@ -1154,6 +1149,17 @@ export default function Home() {
                 </li>
                 <li>
                   <a href="mailto:hello@motkan.ai">hello@motkan.ai</a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Legal</h4>
+              <ul>
+                <li>
+                  <a href="/privacy">Privacy Policy</a>
+                </li>
+                <li>
+                  <a href="/terms">Terms of Service</a>
                 </li>
               </ul>
             </div>

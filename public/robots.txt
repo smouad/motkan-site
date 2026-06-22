@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /.next/
+Disallow: /_next/
+
+Sitemap: https://motkan.ai/sitemap.xml
